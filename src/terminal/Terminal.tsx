@@ -76,7 +76,7 @@ export default function Terminal() {
   const terminalRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const [state, dispatch] = useImmerReducer<TerminalState, Action>(
+  const [state, dispatch] = useImmerReducer<TerminalState, Action, TerminalState>(
     reducer,
     {
       context: new FilesystemContext(),
@@ -84,6 +84,10 @@ export default function Terminal() {
       clearIndex: -1,
       input: [""],
       inputIndex: 0,
+    },
+    (state) => {
+      state.history = state.context.init("");
+      return state;
     },
   );
 
@@ -118,7 +122,7 @@ export default function Terminal() {
 
   // Scroll to bottom the output is added
   useEffect(() => {
-    scrollToBottom()
+    scrollToBottom();
   }, [state.history]);
 
   // Preserve original keys for react element keying

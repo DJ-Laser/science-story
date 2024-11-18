@@ -106,6 +106,15 @@ export default class FilesystemContext implements TerminalContext {
     this.programContext = null;
   }
 
+  init() {
+    const output = [
+      "Welcome to the terminal!",
+      `Type "run nuclear-adventure.sh" to start the game`,
+      `or type "help" to explore other terminal commands.`
+    ];
+    return outputFromStrings(output);
+  }
+
   process(input: string, state: TerminalState): TerminalOutput[] {
     if (this.programContext) {
       const output = this.programContext.process(input, state);
