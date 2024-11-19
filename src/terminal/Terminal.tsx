@@ -112,15 +112,38 @@ export default function Terminal() {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-      e.preventDefault();
-      const distance = e.key === "ArrowUp" ? 1 : -1;
-      dispatch({ type: "scrollInput", distance });
+    switch (e.key) {
+      case "Control":
+      case "Alt":
+      case "Shift":
+      case "CapsLock":
+        case "Fn":
+          case "FnLock":{
+        // Don't focus input on press modifier key
+        break;
+      }
+      case "ArrowUp":
+      case "ArrowDown": {
+        e.preventDefault();
+        const distance = e.key === "ArrowUp" ? 1 : -1;
+        dispatch({ type: "scrollInput", distance });
 
-      // Snap cusror to end of new input from history
-      focusInput(true);
-    } else {
-      focusInput(false);
+        // Snap cusror to end of new input from history
+        focusInput(true);
+        break;
+      }
+      case "c": {
+        // Allow copying terminal output
+        if (!e.getModifierState("Control")) {
+          // If Control is not held, focus as normal
+          focusInput(false);
+        }
+
+        break;
+      }
+      default: {
+        focusInput(false);
+      }
     }
   };
 
