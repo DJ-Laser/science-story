@@ -1,8 +1,4 @@
-import {
-  outputFromString,
-  outputFromStrings,
-  TerminalOutput,
-} from "../../terminal/terminalState";
+import { normalizeToArray, OneOrArray, TerminalOutput } from "../../terminal/terminalState";
 import { Choice } from "./Choice";
 
 export interface Room {
@@ -25,7 +21,7 @@ export class SimpleRoom implements Room {
   }
 
   getPrompt(): TerminalOutput {
-    return outputFromString("What will you chose to do next?");
+    return "What will you chose to do next?";
   }
 }
 
@@ -33,23 +29,17 @@ export interface ChoiceBuilder {
   // destinationRoom
   goto: string;
   name: string;
-  result: string | TerminalOutput[];
-}
-
-function stringOrOutput(output: string | TerminalOutput[]): TerminalOutput[] {
-  if (Array.isArray(output)) return output;
-
-  return outputFromStrings([output]);
+  result: OneOrArray<TerminalOutput>;
 }
 
 export function mkRoom(
-  desc: string | TerminalOutput[],
+  desc: OneOrArray<TerminalOutput>,
   ...choices: ChoiceBuilder[]
 ): Room {
-  const description = stringOrOutput(desc);
+  const description = normalizeToArray(desc);
   const outputChoices = choices.map(({ goto, name, result }) => ({
     name,
-    description: stringOrOutput(result),
+    description: Array.isArray(result) ? result : [result],
     destinationRoom: goto,
   }));
 

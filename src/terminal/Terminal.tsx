@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import { useImmerReducer } from "use-immer";
 import { ChevronRight, Terminal as TerminalIcon } from "lucide-react";
-import { HistoryEntry, TerminalState } from "./terminalState";
-import FilesystemContext from "./context/FilesystemContext";
+import { HistoryEntry, TerminalState, toOutputEntries } from "./terminalState";
+import FilesystemContext from "./context/filesystem/FilesystemContext";
 
 export type Action =
   | { type: "runCurrentCommand" }
@@ -16,7 +16,7 @@ function reducer(draft: TerminalState, action: Action) {
       const output = draft.context.process(input, draft);
 
       draft.history.push({ type: "input", input });
-      draft.history.push(...output);
+      draft.history.push(...toOutputEntries(output));
 
       // Don't add a new input entry if the newest one is empty
       if (draft.input[0].trim()) {
@@ -90,7 +90,7 @@ export default function Terminal() {
       inputIndex: 0,
     },
     (state) => {
-      state.history = state.context.init("", state);
+      state.history = toOutputEntries(state.context.init("", state));
       return state;
     },
   );

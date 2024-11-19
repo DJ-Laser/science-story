@@ -2,10 +2,10 @@ import { immerable } from "immer";
 import { introChapter } from "../../gamedata/introduction";
 import {
   clearTerminal,
-  outputFromString,
-  outputFromStrings,
   TerminalOutput,
   TerminalState,
+  toOutputEntries,
+  toOutputEntry,
 } from "../terminalState";
 import { TerminalContext } from "./TerminalContext";
 import { Room, RoomCollection } from "../../gamedata/framework/Room";
@@ -59,9 +59,9 @@ export class GameContext implements TerminalContext {
     output.push(...this.room.getDescription());
 
     const dividingText = [
-      outputFromString("\n"),
+      toOutputEntry("\n"),
       this.room.getPrompt(),
-      outputFromString("\n"),
+      toOutputEntry("\n"),
     ];
     output.push(...dividingText);
 
@@ -69,7 +69,7 @@ export class GameContext implements TerminalContext {
       `${i}) ${choice.name}`
     );
 
-    output.push(...outputFromStrings(choices));
+    output.push(...toOutputEntries(choices));
 
     return output;
   }
@@ -93,15 +93,15 @@ export class GameContext implements TerminalContext {
 
     if (choiceIndex === null) {
       output.push(
-        outputFromString(
+        toOutputEntry(
           "Invalid choice, please input a number corresponding to the desired choice.",
         ),
       );
-      output.push(outputFromString("\n"));
+      output.push(toOutputEntry("\n"));
     } else {
       const choice = this.room.choices[choiceIndex];
       output.push(...choice.description);
-      output.push(outputFromString("\n"));
+      output.push(toOutputEntry("\n"));
       this.setRoom(choice.destinationRoom);
     }
 

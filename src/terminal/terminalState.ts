@@ -22,16 +22,25 @@ export interface StringOutput {
   output: string;
 }
 
-export function outputFromString(output: string): StringOutput {
-  return { type: "output", output };
+export function toOutputEntry(output: TerminalOutput): TerminalOutputEntry {
+  return (typeof output === "object") ? output : { type: "output", output };
 }
 
-export function outputFromStrings(strings: string[]): StringOutput[] {
-  return strings.map(outputFromString);
+export function toOutputEntries(
+  strings: TerminalOutput[],
+): TerminalOutputEntry[] {
+  return strings.map(toOutputEntry);
 }
 
-export type TerminalOutput = StringOutput;
+export type TerminalOutputEntry = StringOutput;
 
 export type HistoryEntry =
-  | TerminalInput
-  | TerminalOutput;
+| TerminalInput
+| TerminalOutputEntry;
+
+export type TerminalOutput = string;
+export type OneOrArray<T> = T | T[];
+
+export function normalizeToArray<T>(x: OneOrArray<T>) {
+  return Array.isArray(x) ? x : [x];
+}
