@@ -1,28 +1,48 @@
 import {
+  clearTerminal,
   outputFromStrings,
   TerminalOutput,
   TerminalState,
 } from "../terminalState";
 import { immerable } from "immer";
 import { TerminalContext } from "./TerminalContext";
+import { GameContext } from "./GameContext";
+
+type OutputAction =
+  | { action: "program"; program: TerminalContext }
+  | { action: "clear" };
+
+type BuiltinOutput =
+  | OutputAction
+  | string[] & { action?: undefined };
 
 interface BuiltinCommand {
   args?: string[];
   helpText: string;
-  execute: (args: string[], state: TerminalState) => string[];
+  execute: (args: string[], state: TerminalState) => BuiltinOutput;
 }
 
-const programs = new Map<string, TerminalContext | null>([
-  ["nuclear-adventure.sh", null],
-  ["credits.txt", null],
+const programs = new Map<string, () => TerminalContext>([
+  ["nuclear-adventure.sh", () => new GameContext()],
+  ["credits.txt", () => ({
+    init: () => {
+      //TODO: Finish credits
+      const output = [
+        "##### Nuclear Adventure #####",
+        "A text based game by Alex K and Devin M",
+      ];
+      return outputFromStrings(output);
+    },
+    process: () => [],
+    isFinished: () => true,
+  })],
 ]);
 
 const commands = new Map<string, BuiltinCommand>([
   ["clear", {
     helpText: "Clear the terminal",
-    execute: (_, state) => {
-      state.clearIndex = state.history.length;
-      return [];
+    execute: () => {
+      return { action: "clear" };
     },
   }],
   ["date", {
@@ -57,46 +77,16 @@ const commands = new Map<string, BuiltinCommand>([
 
       const programName = args[0];
       if (!programs.has(programName)) {
-        return [`No such program: "${programName}"`]
+        return [`No such program: "${programName}"`];
       }
 
-      //const program = programs.get(programName);
+      // We know the map has programName because of the above early return
+      const programConstructor = programs.get(programName)!;
 
-      return ["TODO: Run program"];
+      return { action: "program", program: programConstructor() };
     },
   }],
 ]);
-
-function processCommand(cmd: string, state: TerminalState): string[] {
-  const parts = cmd.trim().split(" ");
-  const command = parts[0];
-  const args = parts.slice(1);
-
-  const builtin = commands.get(command);
-  if (builtin) {
-    return builtin.execute(args, state);
-  }
-
-  switch (command) {
-    case "":
-      return [];
-    case "help": {
-      const output = ["Available commands:"];
-      output.push("• help - Show this help message");
-
-      for (const [name, builtin] of commands) {
-        const args = builtin.args?.map((a) => `[${a}] `).join("") ?? "";
-        output.push(`• ${name} ${args}- ${builtin.helpText}`);
-      }
-
-      return output;
-    }
-    default:
-      return [
-        `Command not found: ${command}. Type 'help' for available commands.`,
-      ];
-  }
-}
 
 export default class FilesystemContext implements TerminalContext {
   [immerable] = true;
@@ -110,22 +100,69 @@ export default class FilesystemContext implements TerminalContext {
     const output = [
       "Welcome to the terminal!",
       `Type "run nuclear-adventure.sh" to start the game`,
-      `or type "help" to explore other terminal commands.`
+      `or type "help" to explore other terminal commands.`,
     ];
     return outputFromStrings(output);
   }
 
-  process(input: string, state: TerminalState): TerminalOutput[] {
-    if (this.programContext) {
-      const output = this.programContext.process(input, state);
-      if (this.programContext.isFinished()) {
-        this.programContext = null;
-      }
+  processCommand(cmd: string, state: TerminalState): TerminalOutput[] {
+    const parts = cmd.trim().split(" ");
+    const commandName = parts[0];
+    const args = parts.slice(1);
 
-      return output;
-    } else {
-      return outputFromStrings(processCommand(input, state));
+    switch (commandName) {
+      case "":
+        return [];
+      case "help": {
+        const output = ["Available commands:"];
+        output.push("• help - Show this help message");
+
+        for (const [name, builtin] of commands) {
+          const args = builtin.args?.map((a) => `[${a}] `).join("") ?? "";
+          output.push(`• ${name} ${args}- ${builtin.helpText}`);
+        }
+
+        return outputFromStrings(output);
+      }
     }
+
+    const command = commands.get(commandName);
+    if (command) {
+      const output = command.execute(args, state);
+      switch (output.action) {
+        case "clear": {
+          clearTerminal(state);
+          return [];
+        }
+        case "program": {
+          this.programContext = output.program;
+          return this.programContext.init(args.join(" "), state);
+        }
+        case undefined: {
+          return outputFromStrings(output);
+        }
+      }
+    }
+
+    return outputFromStrings([
+      `Command not found: ${commandName}. Type 'help' for available commands.`,
+    ]);
+  }
+
+  process(input: string, state: TerminalState): TerminalOutput[] {
+    let output;
+
+    if (this.programContext) {
+      output = this.programContext.process(input, state);
+    } else {
+      output = this.processCommand(input, state);
+    }
+
+    if (this.programContext?.isFinished()) {
+      this.programContext = null;
+    }
+
+    return output;
   }
 
   isFinished() {

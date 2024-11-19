@@ -8,6 +8,10 @@ export interface TerminalState {
   inputIndex: number;
 }
 
+export function clearTerminal(state: TerminalState) {
+  state.clearIndex = state.history.length;
+}
+
 export interface TerminalInput {
   type: "input";
   input: string;
@@ -18,8 +22,12 @@ export interface StringOutput {
   output: string;
 }
 
+export function outputFromString(output: string): StringOutput {
+  return { type: "output", output };
+}
+
 export function outputFromStrings(strings: string[]): StringOutput[] {
-  return strings.map((output) => ({ type: "output", output }));
+  return strings.map(outputFromString);
 }
 
 export type TerminalOutput = StringOutput;

@@ -76,7 +76,11 @@ export default function Terminal() {
   const terminalRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const [state, dispatch] = useImmerReducer<TerminalState, Action, TerminalState>(
+  const [state, dispatch] = useImmerReducer<
+    TerminalState,
+    Action,
+    TerminalState
+  >(
     reducer,
     {
       context: new FilesystemContext(),
@@ -86,7 +90,7 @@ export default function Terminal() {
       inputIndex: 0,
     },
     (state) => {
-      state.history = state.context.init("");
+      state.history = state.context.init("", state);
       return state;
     },
   );
