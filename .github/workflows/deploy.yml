@@ -33,7 +33,7 @@ jobs:
         with:
           deno-version: v2.x
 
-      - name: Build project
+      - name: Install Dependencies
         run: deno install
 
       - name: Build project
