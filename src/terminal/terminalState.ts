@@ -38,7 +38,7 @@ export type HistoryEntry =
 | TerminalInput
 | TerminalOutputEntry;
 
-export type TerminalOutput = string;
+export type TerminalOutput = string | TerminalOutputEntry;
 export type OneOrArray<T> = T | T[];
 
 export function normalizeToArray<T>(x: OneOrArray<T>) {

@@ -4,7 +4,6 @@ import {
   clearTerminal,
   TerminalOutput,
   TerminalState,
-  toOutputEntries,
   toOutputEntry,
 } from "../terminalState";
 import { TerminalContext } from "./TerminalContext";
@@ -58,18 +57,17 @@ export class GameContext implements TerminalContext {
     const output = [];
     output.push(...this.room.getDescription());
 
-    const dividingText = [
+    output.push(...[
       toOutputEntry("\n"),
       this.room.getPrompt(),
       toOutputEntry("\n"),
-    ];
-    output.push(...dividingText);
+    ]);
 
     const choices = this.room.choices.map((choice, i) =>
       `${i}) ${choice.name}`
     );
 
-    output.push(...toOutputEntries(choices));
+    output.push(...choices);
 
     return output;
   }
@@ -93,15 +91,13 @@ export class GameContext implements TerminalContext {
 
     if (choiceIndex === null) {
       output.push(
-        toOutputEntry(
-          "Invalid choice, please input a number corresponding to the desired choice.",
-        ),
+        "Invalid choice, please input a number corresponding to the desired choice.",
       );
-      output.push(toOutputEntry("\n"));
+      output.push("\n");
     } else {
       const choice = this.room.choices[choiceIndex];
       output.push(...choice.description);
-      output.push(toOutputEntry("\n"));
+      output.push("\n");
       this.setRoom(choice.destinationRoom);
     }
 
