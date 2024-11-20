@@ -35,8 +35,8 @@ export function toOutputEntries(
 export type TerminalOutputEntry = StringOutput;
 
 export type HistoryEntry =
-| TerminalInput
-| TerminalOutputEntry;
+  | TerminalInput
+  | TerminalOutputEntry;
 
 export type TerminalOutput = string | TerminalOutputEntry;
 export type OneOrArray<T> = T | T[];

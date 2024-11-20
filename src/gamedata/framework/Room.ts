@@ -1,4 +1,8 @@
-import { normalizeToArray, OneOrArray, TerminalOutput } from "../../terminal/terminalState";
+import {
+  normalizeToArray,
+  OneOrArray,
+  TerminalOutput,
+} from "../../terminal/terminalState";
 import { Choice } from "./Choice";
 
 export interface Room {

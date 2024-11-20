@@ -117,8 +117,8 @@ export default function Terminal() {
       case "Alt":
       case "Shift":
       case "CapsLock":
-        case "Fn":
-          case "FnLock":{
+      case "Fn":
+      case "FnLock": {
         // Don't focus input on press modifier key
         break;
       }
