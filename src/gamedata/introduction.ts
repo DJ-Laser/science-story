@@ -1,23 +1,24 @@
-import { mkRoom, Room, RoomCollection } from "./framework/Room";
+import { mkActionRoom } from "./builders/roomBuilders";
+import { Room, RoomCollection } from "./framework/Room";
 
 const introductionRooms: () => ([string, Room])[] = () => [
   [
     "nullRoom",
-    mkRoom("This is a test room, if you see this, something went wrong :P", {
+    mkActionRoom("This is a test room, if you see this, something went wrong :P", {
       goto: "startingRoom",
-      name: "Go to start",
+      desc: "Go to start",
       result: [],
     }),
   ],
   [
     "startingRoom",
-    mkRoom("Starting Intro Room", {
+    mkActionRoom("Starting Intro Room", {
       goto: "startingRoom",
-      name: "Loop",
+      desc: "Loop",
       result: "Loop loop yeet",
     }, {
       goto: "nullRoom",
-      name: "NullPointerException",
+      desc: "NullPointerException",
       result: "Null room time :)",
     }),
   ],

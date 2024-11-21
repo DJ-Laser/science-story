@@ -1,11 +1,6 @@
 import { immerable } from "immer";
 import { introChapter } from "../../gamedata/introduction";
-import {
-  clearTerminal,
-  TerminalOutput,
-  TerminalState,
-  toOutputEntry,
-} from "../terminalState";
+import { clearTerminal, TerminalOutput, TerminalState } from "../terminalState";
 import { TerminalContext } from "./TerminalContext";
 import { Room, RoomCollection } from "../../gamedata/framework/Room";
 
@@ -38,6 +33,9 @@ export class GameContext implements TerminalContext {
   }
 
   setRoom(roomId: string) {
+    // Keep current room on empty string
+    if (roomId === "") return;
+
     let maybeRoom = this.rooms.get(roomId);
     if (maybeRoom !== undefined) {
       this.prefixedRoom = maybeRoom;
@@ -53,57 +51,20 @@ export class GameContext implements TerminalContext {
     throw `Could not find room ${roomId}`;
   }
 
-  outputRoomDetails(): TerminalOutput[] {
-    const output = [];
-    output.push(...this.room.getDescription());
-
-    output.push(...[
-      toOutputEntry("\n"),
-      this.room.getPrompt(),
-      toOutputEntry("\n"),
-    ]);
-
-    const choices = this.room.choices.map((choice, i) =>
-      `${i}) ${choice.name}`
-    );
-
-    output.push(...choices);
-
-    return output;
-  }
-
   init(_input: string, state: TerminalState): TerminalOutput[] {
     clearTerminal(state);
-    return this.outputRoomDetails();
+    return this.room.getPrompt();
   }
+
   process(input: string): TerminalOutput[] {
-    const output: TerminalOutput[] = [];
-    let choiceIndex: number | null = null;
+    const choice = this.room.process(input);
+    this.setRoom(choice.destinationRoom);
 
-    for (const i in this.room.choices) {
-      console.log(`Saw choice ${i}`);
-      if (i === input) {
-        console.log(`Confirmed choice ${i}`);
-        choiceIndex = parseInt(input);
-        break;
-      }
-    }
-
-    if (choiceIndex === null) {
-      output.push(
-        "Invalid choice, please input a number corresponding to the desired choice.",
-      );
-      output.push("\n");
-    } else {
-      const choice = this.room.choices[choiceIndex];
-      output.push(...choice.description);
-      output.push("\n");
-      this.setRoom(choice.destinationRoom);
-    }
-
-    output.push(...this.outputRoomDetails());
-
-    return output;
+    return [
+      ...choice.result,
+      "\n",
+      ...this.room.getPrompt(),
+    ];
   }
   isFinished() {
     return false;
