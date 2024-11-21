@@ -20,27 +20,31 @@ export class ChoiceRoom implements Room {
   }
 
   getPrompt(): TerminalOutput[] {
-    const prompt = this.prompt.length === 0 ? [] : ["\n", ...this.prompt];
-    return [...this.description, ...prompt, "\n"];
+    const description = this.description.length === 0
+      ? []
+      : [...this.description, "\n"];
+    const prompt = this.prompt.length === 0 ? [] : [...this.prompt, "\n"];
+
+    const choices = this.choices.map((choice, i) =>
+      `${i + 1}) ${choice.description}`
+    );
+
+    return [...description, ...prompt, ...choices];
   }
 
   process(input: string): Choice {
-    let choiceIndex: number | null = null;
-
-    for (const i in this.choices) {
-      if (i === input) {
-        choiceIndex = parseInt(input);
-        break;
+    const choice = this.choices.reduce<Choice | null>((prev, choice, i) => {
+      // Choices are 1-indexed in the ui, so make sure to account for that
+      if (input === (i + 1).toString()) {
+        return choice;
       }
-    }
 
-    if (choiceIndex === null) {
-      return new ErrorChoice([
-        "Invalid choice, please input a number corresponding to the desired choice.",
-        "\n",
-      ]);
-    }
-    return this.choices[choiceIndex];
+      return prev;
+    }, null);
+  
+    return choice ?? new ErrorChoice([
+      "Invalid choice, please input a number corresponding to the desired choice.",
+    ]);
   }
 }
 

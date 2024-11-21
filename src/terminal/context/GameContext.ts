@@ -59,10 +59,11 @@ export class GameContext implements TerminalContext {
   process(input: string): TerminalOutput[] {
     const choice = this.room.process(input);
     this.setRoom(choice.destinationRoom);
-
+    
+    const result = choice.result.length === 0 ? [] : [...choice.result, "\n"];
+    
     return [
-      ...choice.result,
-      "\n",
+      ...result,
       ...this.room.getPrompt(),
     ];
   }

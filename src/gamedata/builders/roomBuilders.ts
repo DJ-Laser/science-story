@@ -20,7 +20,7 @@ export function mkRoom<
   desc: OneOrArray<TerminalOutput>,
   ...choices: ChoiceBuilder[]
 ): Room {
-  const description = normalizeToArray(desc);
+  const description = normalizeToArray(desc === "" ? [] : desc);
   const outputChoices = choices.map(({ goto, desc, result }) => ({
     description: desc,
     result: Array.isArray(result) ? result : [result],
@@ -51,15 +51,15 @@ export interface QuestionBuilder {
 }
 
 export function mkQuestionRooms(
-  { key, doneGoto, desc, questions, reQuestion, doneQuestions }: {
-    key: string;
+  key: string,
+  { doneGoto, desc, questions, reQuestion, doneQuestions }: {
     doneGoto: string;
     desc: OneOrArray<TerminalOutput>;
     questions: QuestionBuilder[];
     reQuestion?: ChoiceBuilder;
     doneQuestions?: ChoiceBuilder;
   },
-): { [key: string]: Room } {
+): ([string, Room])[] {
   const answerRoomKey = `${key}-answerRoom`;
   const questionRoom = mkDialougeRoom(
     desc,
@@ -84,8 +84,8 @@ export function mkQuestionRooms(
     },
   );
 
-  return {
-    [key]: questionRoom,
-    [answerRoomKey]: answerRoom,
-  };
+  return [
+    [key, questionRoom],
+    [answerRoomKey, answerRoom],
+  ];
 }
