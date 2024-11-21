@@ -1,5 +1,5 @@
 import { immerable } from "immer";
-import { introChapter } from "../../gamedata/introduction";
+import { testRooms } from "../../gamedata/testRooms";
 import { clearTerminal, TerminalOutput, TerminalState } from "../terminalState";
 import { TerminalContext } from "./TerminalContext";
 import { Room, RoomCollection } from "../../gamedata/framework/Room";
@@ -18,8 +18,8 @@ export class GameContext implements TerminalContext {
 
   constructor() {
     this.rooms = new Map();
-    this.addRooms(introChapter);
-    const prefix = introChapter.prefix;
+    this.addRooms(testRooms);
+    const prefix = testRooms.prefix;
     const returnedRoom = this.rooms.get(prefix + "startingRoom");
     if (returnedRoom === undefined) throw "Starting room not found";
 

@@ -62,7 +62,7 @@ const introductionRooms: () => ([string, Room])[] = () => [
   })
 ];
 
-export const introChapter: RoomCollection = {
+export const testRooms: RoomCollection = {
   getRooms: introductionRooms,
   prefix: "intro-",
 };
