@@ -4,11 +4,14 @@ import { Room, RoomCollection } from "./framework/Room";
 const introductionRooms: () => ([string, Room])[] = () => [
   [
     "nullRoom",
-    mkActionRoom("This is a test room, if you see this, something went wrong :P", {
-      goto: "startingRoom",
-      desc: "Go to start",
-      result: [],
-    }),
+    mkActionRoom(
+      "This is a test room, if you see this, something went wrong :P",
+      {
+        goto: "startingRoom",
+        desc: "Go to start",
+        result: [],
+      },
+    ),
   ],
   [
     "startingRoom",

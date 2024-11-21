@@ -81,7 +81,7 @@ export function mkQuestionRooms(
       desc: "I have no further questions",
       goto: doneGoto,
       result: "",
-    }
+    },
   );
 
   return {
