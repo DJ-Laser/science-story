@@ -5,7 +5,7 @@ import {
 } from "../../terminal/terminalState";
 import { NamedChoice } from "../framework/Choice";
 import { Room } from "../framework/Room";
-import { ChoiceRoom } from "./ChoiceRoom";
+import { ChoiceRoom, DialogueRoom } from "./ChoiceRoom";
 
 export interface ChoiceBuilder {
   goto: string;
@@ -14,7 +14,7 @@ export interface ChoiceBuilder {
 }
 
 export function mkRoom<
-  C extends new (desc: TerminalOutput[], choices: NamedChoice[]) => ChoiceRoom,
+  C extends (desc: TerminalOutput[], choices: NamedChoice[]) => ChoiceRoom,
 >(
   constructor: C,
   desc: OneOrArray<TerminalOutput>,
@@ -27,21 +27,21 @@ export function mkRoom<
     destinationRoom: goto,
   }));
 
-  return new constructor(description, outputChoices);
+  return constructor(description, outputChoices);
 }
 
 export function mkActionRoom(
   desc: OneOrArray<TerminalOutput>,
   ...choices: ChoiceBuilder[]
 ): Room {
-  return mkRoom(ChoiceRoom, desc, ...choices);
+  return mkRoom((d, c) => new ChoiceRoom(d, c), desc, ...choices);
 }
 
 export function mkDialougeRoom(
   desc: OneOrArray<TerminalOutput>,
   ...choices: ChoiceBuilder[]
 ): Room {
-  return mkRoom(ChoiceRoom, desc, ...choices);
+  return mkRoom((d, c) => new DialogueRoom(d, c), desc, ...choices);
 }
 
 export interface QuestionBuilder {
@@ -61,7 +61,8 @@ export function mkQuestionRooms(
   },
 ): ([string, Room])[] {
   const answerRoomKey = `${key}-answerRoom`;
-  const questionRoom = mkDialougeRoom(
+  const questionRoom = mkRoom(
+    (desc, questions) => new DialogueRoom(desc, questions, ["What will you ask?"]),
     desc,
     ...questions.map(({ goto, question, result }) => ({
       goto: goto ?? answerRoomKey,

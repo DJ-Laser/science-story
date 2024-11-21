@@ -41,7 +41,7 @@ export class ChoiceRoom implements Room {
 
       return prev;
     }, null);
-  
+
     return choice ?? new ErrorChoice([
       "Invalid choice, please input a number corresponding to the desired choice.",
     ]);
@@ -49,15 +49,19 @@ export class ChoiceRoom implements Room {
 }
 
 export class DialogueRoom extends ChoiceRoom {
-  static prompt = ["What will you say?"];
+  static defaultPrompt = ["What will you say?"];
 
-  constructor(description: TerminalOutput[], choices: NamedChoice[]) {
+  constructor(
+    description: TerminalOutput[],
+    choices: NamedChoice[],
+    prompt: TerminalOutput[] = DialogueRoom.defaultPrompt,
+  ) {
     const quotedChoices = choices.map((choice) => {
       return {
         ...choice,
         description: `"${choice.description}"`,
       };
     });
-    super(description, quotedChoices, DialogueRoom.prompt);
+    super(description, quotedChoices, prompt);
   }
 }
