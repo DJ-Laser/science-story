@@ -1,5 +1,5 @@
 import { TerminalOutput } from "../../terminal/terminalState";
-import { Choice } from "../framework/Choice";
+import { Choice, ErrorChoice } from "../framework/Choice";
 import { Room } from "../framework/Room";
 
 const defaultUserName = "UserNameNotFound";
@@ -14,13 +14,15 @@ export class NameSelectRoom implements Room {
 
 
   getPrompt(): TerminalOutput[] {
-    return [
-      "Please enter your username"
-    ];
+    return [];
   }
 
   process(input: string): Choice {
-    USER_NAME = input;
+    if (input.trim() === "") {
+      return new ErrorChoice(["Please enter a valid name"]);
+    }
+
+    USER_NAME = input.trim();
     return {
       result: [],
       destinationRoom: this.nextRoomId,

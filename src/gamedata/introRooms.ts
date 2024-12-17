@@ -13,7 +13,7 @@ const rooms: () => ([string, Room])[] = () => [
       {
         goto: "nameSelectRoom",
         desc: "Start the program",
-        result: [],
+        result: "Please enter your username",
       },
       {
         goto: "todo-credits",
@@ -32,7 +32,7 @@ const rooms: () => ([string, Room])[] = () => [
       (d, c) => new ChoiceRoom(d, c, [() => `Is the name \`${USER_NAME}\` correct?`]),
       "",
       {
-        goto: "todo",
+        goto: "startSimulationRoom",
         desc: "Yes",
         result: [],
       },
@@ -46,7 +46,7 @@ const rooms: () => ([string, Room])[] = () => [
   [
     "startSimulationRoom",
     mkActionRoom(
-      ["Hello User, and welcome to the interactive history lesson.",
+      [() => `Hello ${USER_NAME}, and welcome to the interactive history lesson.`,
         "Today you are going to go on an adventure through time and be able to speak to people and learn about how the atomic bomb was designed and have evolved overtime."
       ],
       {
