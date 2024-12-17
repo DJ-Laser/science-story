@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useImmerReducer } from "use-immer";
 import { ChevronRight, Terminal as TerminalIcon } from "lucide-react";
 import { HistoryEntry, TerminalState, toOutputEntries } from "./terminalState";
@@ -86,7 +86,7 @@ export default function Terminal() {
       context: new FilesystemContext(),
       history: [],
       clearIndex: -1,
-      input: [""],
+      input: ["", "run nuclear-adventure.sh"],
       inputIndex: 0,
     },
     (state) => {
