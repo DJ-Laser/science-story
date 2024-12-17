@@ -23,7 +23,12 @@ export interface StringOutput {
 }
 
 export function toOutputEntry(output: TerminalOutput): TerminalOutputEntry {
-  return (typeof output === "object") ? output : { type: "output", output };
+  if (typeof output === "string") return { type: "output", output };
+  if (typeof output === "function") return toOutputEntry(output());
+
+  switch (output.type) {
+    case "output": return output;
+  }
 }
 
 export function toOutputEntries(
@@ -38,7 +43,8 @@ export type HistoryEntry =
   | TerminalInput
   | TerminalOutputEntry;
 
-export type TerminalOutput = string | TerminalOutputEntry;
+export type TerminalOutput = string | TerminalOutputEntry | (() => TerminalOutput);
+
 export type OneOrArray<T> = T | T[];
 
 export function normalizeToArray<T>(x: OneOrArray<T>) {
