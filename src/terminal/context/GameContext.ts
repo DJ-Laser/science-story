@@ -4,6 +4,7 @@ import { clearTerminal, TerminalOutput, TerminalState } from "../terminalState";
 import { TerminalContext } from "./TerminalContext";
 import { Room, RoomCollection } from "../../gamedata/framework/Room";
 import { introRooms } from "../../gamedata/introRooms";
+import { ch1Rooms } from "../../gamedata/ch1Rooms";
 
 type PrefixedRoom = { room: Room; prefix: string };
 
@@ -21,6 +22,9 @@ export class GameContext implements TerminalContext {
     this.rooms = new Map();
     this.addRooms(testRooms);
     this.addRooms(introRooms);
+
+    this.addRooms(ch1Rooms);
+
     const prefix = introRooms.prefix;
     const returnedRoom = this.rooms.get(prefix + "startingRoom");
     if (returnedRoom === undefined) throw "Starting room not found";
@@ -61,13 +65,10 @@ export class GameContext implements TerminalContext {
   process(input: string): TerminalOutput[] {
     const choice = this.room.process(input);
     this.setRoom(choice.destinationRoom);
-    
+
     const result = choice.result.length === 0 ? [] : [...choice.result, "\n"];
-    
-    return [
-      ...result,
-      ...this.room.getPrompt(),
-    ];
+
+    return [...result, ...this.room.getPrompt()];
   }
   isFinished() {
     return false;
