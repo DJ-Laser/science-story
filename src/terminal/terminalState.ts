@@ -27,7 +27,8 @@ export function toOutputEntry(output: TerminalOutput): TerminalOutputEntry {
   if (typeof output === "function") return toOutputEntry(output());
 
   switch (output.type) {
-    case "output": return output;
+    case "output":
+      return output;
   }
 }
 
@@ -39,11 +40,12 @@ export function toOutputEntries(
 
 export type TerminalOutputEntry = StringOutput;
 
-export type HistoryEntry =
-  | TerminalInput
-  | TerminalOutputEntry;
+export type HistoryEntry = TerminalInput | TerminalOutputEntry;
 
-export type TerminalOutput = string | TerminalOutputEntry | (() => TerminalOutput);
+export type TerminalOutput =
+  | string
+  | TerminalOutputEntry
+  | (() => TerminalOutput);
 
 export type OneOrArray<T> = T | T[];
 

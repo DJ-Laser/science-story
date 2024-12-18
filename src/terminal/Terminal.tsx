@@ -42,9 +42,11 @@ function reducer(draft: TerminalState, action: Action) {
   }
 }
 
-function TerminalCommand(
-  { children }: { children: JSX.Element | readonly JSX.Element[] },
-) {
+function TerminalCommand({
+  children,
+}: {
+  children: JSX.Element | readonly JSX.Element[];
+}) {
   return (
     <div className="my-2 h-4 flex items-center gap-2 text-green-400">
       <ChevronRight className="w-4 h-4" />
@@ -153,7 +155,8 @@ export default function Terminal() {
   }, [state.history]);
 
   // Preserve original keys for react element keying
-  const displayedHistory = state.history.map((entry, i) => ({ entry, i }))
+  const displayedHistory = state.history
+    .map((entry, i) => ({ entry, i }))
     .filter((_, i) => i > state.clearIndex);
   const input = state.input[state.inputIndex];
 
@@ -191,7 +194,8 @@ export default function Terminal() {
                   dispatch({
                     type: "setInput",
                     input: e.target.value,
-                  })}
+                  })
+                }
                 className="w-full bg-transparent outline-none"
                 autoFocus
                 spellCheck={false}

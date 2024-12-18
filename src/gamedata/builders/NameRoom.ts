@@ -12,7 +12,6 @@ export class NameSelectRoom implements Room {
     this.nextRoomId = nextRoomId;
   }
 
-
   getPrompt(): TerminalOutput[] {
     return [];
   }

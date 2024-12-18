@@ -52,17 +52,24 @@ export interface QuestionBuilder {
 
 export function mkQuestionRooms(
   key: string,
-  { doneGoto, desc, questions, reQuestion, doneQuestions }: {
+  {
+    doneGoto,
+    desc,
+    questions,
+    reQuestion,
+    doneQuestions,
+  }: {
     doneGoto: string;
     desc: OneOrArray<TerminalOutput>;
     questions: QuestionBuilder[];
     reQuestion?: ChoiceBuilder;
     doneQuestions?: ChoiceBuilder;
   },
-): ([string, Room])[] {
+): [string, Room][] {
   const answerRoomKey = `${key}-answerRoom`;
   const questionRoom = mkRoom(
-    (desc, questions) => new DialogueRoom(desc, questions, ["What will you ask?"]),
+    (desc, questions) =>
+      new DialogueRoom(desc, questions, ["What will you ask?"]),
     desc,
     ...questions.map(({ goto, question, result }) => ({
       goto: goto ?? answerRoomKey,
