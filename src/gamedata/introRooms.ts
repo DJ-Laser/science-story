@@ -1,5 +1,5 @@
 import { ChoiceRoom } from "./builders/ChoiceRoom";
-import { NameSelectRoom, USER_NAME } from "./builders/NameRoom";
+import { NameSelectRoom, USER_NAME } from "./builders/NameSelectRoom";
 import { mkActionRoom, mkRoom } from "./builders/roomBuilders";
 import { Room, RoomCollection } from "./framework/Room";
 
