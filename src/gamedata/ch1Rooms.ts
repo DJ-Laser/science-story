@@ -75,7 +75,7 @@ const rooms: () => [string, Room][] = () => [
       {
         goto: "ch2-startingRoom",
         question: "I have no questions",
-        result: "",
+        result: [],
       },
     ],
   }),

@@ -83,12 +83,12 @@ export function mkQuestionRooms(
     reQuestion ?? {
       desc: "I would like to ask another question",
       goto: key,
-      result: "",
+      result: [],
     },
     doneQuestions ?? {
       desc: "I have no further questions",
       goto: doneGoto,
-      result: "",
+      result: [],
     },
   );
 

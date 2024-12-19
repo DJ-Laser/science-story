@@ -18,7 +18,7 @@ const rooms: () => [string, Room][] = () => [
       {
         goto: "meetingRoom",
         desc: "Meet the scientist",
-        result: "",
+        result: [],
       },
     ),
   ],
@@ -32,13 +32,13 @@ const rooms: () => [string, Room][] = () => [
       {
         goto: "questionRoom1",
         desc: "ask questions",
-        result: "",
+        result: [],
       },
     ),
   ],
   ...mkQuestionRooms("questionRoom1", {
     doneGoto: "ch3-startingRoom",
-    desc: "",
+    desc: [],
     questions: [
       {
         question: "Tell me more about Plutonium compared to uranium?",
@@ -58,7 +58,7 @@ const rooms: () => [string, Room][] = () => [
       {
         goto: "ch3-startingRoom",
         question: "I have no questions.",
-        result: "",
+        result: [],
       },
     ],
   }),
