@@ -30,7 +30,7 @@ export class PressEnterRoom implements Room {
     return [...description, ...prompt];
   }
 
-  process(input: string): Choice {
+  process(): Choice {
     return {
       result: this.result,
       destinationRoom: this.nextRoomId,
