@@ -32,8 +32,8 @@ const rooms: () => [string, Room][] = () => [
       ],
       {
         goto: "questionRoom1",
-        desc: "ask questions",
-        result: [],
+        desc: "May I ask you some questions",
+        result: ['Glenn Seaborg: "Of course, what would you like to know"'],
       },
     ),
   ],
@@ -69,7 +69,7 @@ const rooms: () => [string, Room][] = () => [
     mkDialougeRoom(
       [
         "You return to the room with Glenn Seaborg, Oppenheimer is also present.",
-        "J Robert Oppenhiemer: I take it everything is ready for the test?",
+        'J Robert Oppenhiemer: "I take it everything is ready for the test?"',
       ],
       {
         desc: "Yes, me and Dr. Seaborg have prepared everything.",
@@ -81,7 +81,7 @@ const rooms: () => [string, Room][] = () => [
   [
     "preBombTestRoom2",
     mkActionRoom(
-      "J Robert Oppenhiemer: Excellent! Once you both put on eye protection, we may monitor the explosion from this bunker.",
+      'J Robert Oppenhiemer: "Excellent! Once you both put on eye protection, we may monitor the explosion from this bunker."',
       {
         desc: "Take a pair eye protection glasses",
         goto: "bombTestRoom",

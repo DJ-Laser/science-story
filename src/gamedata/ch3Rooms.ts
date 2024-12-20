@@ -21,7 +21,7 @@ const rooms: () => [string, Room][] = () => [
   [
     "pilotMeetingRoom",
     mkActionRoom(
-      "Pilot: Hello there. Are you the researcher who came to ask about the bomb dropping?",
+      'Pilot: "Hello there. Are you the researcher who came to ask about the bomb dropping?"',
       {
         desc: "Introduce yourself",
         result: [],
@@ -39,35 +39,35 @@ const rooms: () => [string, Room][] = () => [
       ],
       "pilotQuestionRoom",
       [
-        "Sweeny: With introductions out of the way, let's talk about the bomb. That's what you're here for right?",
+        `Sweeny: "With introductions out of the way, let's talk about the bomb. That's what you're here for right?"`,
       ],
     ),
   ],
   ...mkQuestionRooms("pilotQuestionRoom", {
-    desc: "Sweeny: What do you want to know about the bomb?",
+    desc: 'Sweeny: "What do you want to know about the bomb?"',
     doneGoto: "test-nullRoom",
     questions: [
       {
         question:
           "Could you tell me about the bomb you dropped compared to the bomb dropped on Hiroshima?",
         result: [
-          "Sweeney: The bomb I dropped was nicknamed the “Fat Man”. The bomb dropped on Hiroshima was nicknamed the “Little Boy”.",
-          "The “Little Boy” was a gun type bomb that used uranium, and had the force of around 1500 tons of TNT. The “Fat Man” was an implosion type bomb that used Plutonium, and had the force of around 21,000 Tons of TNT.",
-          "The “Fat Man” caused less casualties than the “Little Boy” because Nagasaki was smaller than Hiroshima and the terrain around Nagasaki contained some of the explosion.",
+          'Sweeney: "The bomb I dropped was nicknamed the “Fat Man”. The bomb dropped on Hiroshima was nicknamed the “Little Boy”."',
+          '"The “Little Boy” was a gun type bomb that used uranium, and had the force of around 1500 tons of TNT. The “Fat Man” was an implosion type bomb that used Plutonium, and had the force of around 21,000 Tons of TNT."',
+          '"The “Fat Man” caused less casualties than the “Little Boy” because Nagasaki was smaller than Hiroshima and the terrain around Nagasaki contained some of the explosion."',
         ],
       },
       {
         question: "Could you tell me about the Casualties of the two bombs?",
         result: [
-          "Sweeney: The bomb dropped on Hiroshima killed over 100,000 people and destroyed three quarters of the buildings in the city. The bomb dropped on Nagasaki killed an estimated 39,000 people.",
-          "The casualties combined were 110,000 to 210,000. We discovered that the bombs cause radioactivity and so the casualties can't account for the people killed by radioactive fallout.",
+          'Sweeney: "The bomb dropped on Hiroshima killed over 100,000 people and destroyed three quarters of the buildings in the city. The bomb dropped on Nagasaki killed an estimated 39,000 people."',
+          `"The casualties combined were 110,000 to 210,000. We discovered that the bombs cause radioactivity and so the casualties can't account for the people killed by radioactive fallout."`,
         ],
       },
       {
         question:
           "Could you tell me about the process behind the bomb dropping?",
         result: [
-          "Sweeney:  The final decision to  drop the bomb fell on to president Truman as Rossevelt died before the bombs were completed. The bombing of pearl harbor increased the speed of our efforts to develop the atomic bomb.",
+          'Sweeney: "The final decision to  drop the bomb fell on to president Truman as Rossevelt died before the bombs were completed. The bombing of pearl harbor increased the speed of our efforts to develop the atomic bomb."',
         ],
       },
     ],
@@ -76,7 +76,7 @@ const rooms: () => [string, Room][] = () => [
     "pilotLeaveRoom",
     mkDialougeRoom(
       [
-        "Sweeney: Alright then, I am due for a debrief at the base soon so this is great timing.",
+        'Sweeney: "Alright then, I am due for a debrief at the base soon so this is great timing."',
         "Major Sweeney exchanges a few words with a technician, and they both head for the Air Force Base.",
       ],
       {

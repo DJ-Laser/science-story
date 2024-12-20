@@ -28,15 +28,15 @@ const rooms: () => [string, Room][] = () => [
         goto: "questionRoom1",
         desc: "What is this place?",
         result: [
-          "Scientist: This is the Los Alamos Laboratory, a state of the art facility for research into nuclear weapons.",
-          "Ah, but where are my manners? My name is Robbert Oppenheimer. It is good to have you here.",
+          'Scientist: "This is the Los Alamos Laboratory, a state of the art facility for research into nuclear weapons."',
+          '"Ah, but where are my manners? My name is Robbert Oppenheimer. It is good to have you here."',
         ],
       },
       {
         goto: "questionRoom1",
         desc: "And who are you?",
         result: [
-          "J Robert Oppenheimer: I am Robert Oppenheimer. The lead scientist at this facility.",
+          'J Robert Oppenheimer: "I am Robert Oppenheimer. The lead scientist at this facility."',
         ],
       },
     ),
@@ -51,26 +51,26 @@ const rooms: () => [string, Room][] = () => [
       {
         question: "Tell me more about the Manhattan project?",
         result: [
-          "J Robert Oppenheimer: The Manhattan project is a secret project working on developing weapons capable of ending the war in favor of the allies.",
-          "Scientists from both Canada and The United Kindoms have joined us to work on this project. The Manhattan project is not the first project researching atomic weapons, but as far as we can tell the Germans have gotten nowhere since they started.",
+          'J Robert Oppenheimer: "The Manhattan project is a secret project working on developing weapons capable of ending the war in favor of the allies."',
+          '"Scientists from both Canada and The United Kindoms have joined us to work on this project. The Manhattan project is not the first project researching atomic weapons, but as far as we can tell the Germans have gotten nowhere since they started."',
         ],
       },
       {
         question: "Tell me more about the weapons being developed?",
         result:
-          "J Robert Oppenheimer: We are developing nuclear bombs. Nuclear bombs use nuclear energy to create huge reactions of power and turn that power into an explosion of huge magnitude.",
+          'J Robert Oppenheimer: "We are developing nuclear bombs. Nuclear bombs use nuclear energy to create huge reactions of power and turn that power into an explosion of huge magnitude."',
       },
       {
         question: "Tell me more about nuclear energy and how it is generated?",
         result: [
-          "J Robert Oppenheimer: Nuclear energy is the energy generated when atoms split apart, the two ways this is generated is fusion or fission. Fusion refers to the merging of two lighter atoms into heavier atoms, and Fission is the opposite, splitting one heavier atom into two smaller atoms.",
-          "This causes a chain reaction that will generate huge amounts of energy because the process releases neutrons that will collide with other atoms, causing the same process to occur.",
+          'J Robert Oppenheimer: "Nuclear energy is the energy generated when atoms split apart, the two ways this is generated is fusion or fission. Fusion refers to the merging of two lighter atoms into heavier atoms, and Fission is the opposite, splitting one heavier atom into two smaller atoms."',
+          '"This causes a chain reaction that will generate huge amounts of energy because the process releases neutrons that will collide with other atoms, causing the same process to occur."',
         ],
       },
       {
         question: "Tell me about yourself?",
         result:
-          "J Robert Oppenheimer: I direct the project here at the Los Alamos laboratory, where we are designing the bombs. The other laboratories are at hanford, washington and Oak ridge, Tennessee.",
+          'J Robert Oppenheimer: "I direct the project here at the Los Alamos laboratory, where we are designing the bombs. The other laboratories are at hanford, washington and Oak ridge, Tennessee."',
       },
       {
         goto: "ch2-startingRoom",
