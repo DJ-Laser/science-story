@@ -67,7 +67,7 @@ function TerminalHistory({ entry }: { entry: HistoryEntry }) {
       );
     case "output":
       return (
-        <div className="ml-6 text-gray-300 whitespace-pre-line">
+        <div className="min-h-4 ml-6 text-gray-300 whitespace-pre-line">
           <span>{entry.output}</span>
         </div>
       );
