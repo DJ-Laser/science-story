@@ -109,7 +109,7 @@ const rooms: () => [string, Room][] = () => [
     ),
   ],
 ];
-export const ch1Rooms: RoomCollection = {
+export const ch2Rooms: RoomCollection = {
   getRooms: rooms,
   prefix: "ch2-",
 };

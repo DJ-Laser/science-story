@@ -2,8 +2,8 @@ import {
   mkActionRoom,
   mkDialougeRoom,
   mkQuestionRooms,
-} from "./builders/roomBuilders";
-import { Room, RoomCollection } from "./framework/Room";
+} from "./builders/roomBuilders.ts";
+import { Room, RoomCollection } from "./framework/Room.ts";
 import { PressEnterRoom } from "./builders/PressEnterRoom.ts";
 import { USER_NAME } from "./builders/NameSelectRoom.ts";
 
@@ -93,7 +93,8 @@ const rooms: () => [string, Room][] = () => [
     ),
   ],
 ];
-export const ch1Rooms: RoomCollection = {
+
+export const ch3Rooms: RoomCollection = {
   getRooms: rooms,
   prefix: "ch3-",
 };

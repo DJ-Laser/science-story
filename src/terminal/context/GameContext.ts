@@ -5,6 +5,8 @@ import { TerminalContext } from "./TerminalContext";
 import { Room, RoomCollection } from "../../gamedata/framework/Room";
 import { introRooms } from "../../gamedata/introRooms";
 import { ch1Rooms } from "../../gamedata/ch1Rooms";
+import { ch2Rooms } from "../../gamedata/ch2Rooms";
+import { ch3Rooms } from "../../gamedata/ch3Rooms";
 
 type PrefixedRoom = { room: Room; prefix: string };
 
@@ -24,6 +26,8 @@ export class GameContext implements TerminalContext {
     this.addRooms(introRooms);
 
     this.addRooms(ch1Rooms);
+    this.addRooms(ch2Rooms);
+    this.addRooms(ch3Rooms);
 
     const prefix = introRooms.prefix;
     const returnedRoom = this.rooms.get(prefix + "startingRoom");

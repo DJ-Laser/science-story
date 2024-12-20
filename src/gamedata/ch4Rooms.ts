@@ -23,7 +23,7 @@ const rooms: () => [string, Room][] = () => [
   ],
   ...mkQuestionRooms(),
 ];
-export const ch1Rooms: RoomCollection = {
+export const ch4Rooms: RoomCollection = {
   getRooms: rooms,
   prefix: "ch2-",
 };
