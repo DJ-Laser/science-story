@@ -1,10 +1,13 @@
 import { TerminalOutput } from "../../terminal/terminalState";
 import { Choice } from "../framework/Choice";
 import { Room } from "../framework/Room";
+import { immerable } from "immer";
 
 type quizQuestion = "select" | "detectorElement" | "bombType" | "testCodeName";
 
 export class Ch2QuizRoom implements Room {
+  [immerable] = true;
+
   static detectorCalibrations = ["Uranium", "Plutonium", "Polonium"];
   static correctDetectorCalibration = Ch2QuizRoom.detectorCalibrations[1];
 
@@ -22,6 +25,7 @@ export class Ch2QuizRoom implements Room {
   completeRoomId: string;
 
   constructor(returnRoom: string, completeRoom: string) {
+    this.currentQuestion = "select";
     this.returnRoomId = returnRoom;
     this.completeRoomId = completeRoom;
   }
@@ -45,6 +49,7 @@ export class Ch2QuizRoom implements Room {
   }
 
   getPrompt(): TerminalOutput[] {
+    console.log(`Prompting question ${this.currentQuestion}`);
     switch (this.currentQuestion) {
       case "select": {
         if (this.verifyChoices()) {
@@ -58,8 +63,13 @@ export class Ch2QuizRoom implements Room {
         return this.promptChoices(
           [
             "There are three steps that need to be completed before you can proceed with the test",
+            "",
           ],
-          [],
+          [
+            "Calibrate the radiation detector",
+            "Calibrate the detonator",
+            "Enter the authentication code",
+          ],
         );
       }
 
@@ -101,6 +111,7 @@ export class Ch2QuizRoom implements Room {
 
   process(input: string): Choice {
     let output: TerminalOutput[];
+    console.log(`Processing "${input}" for question ${this.currentQuestion}`);
 
     switch (this.currentQuestion) {
       case "select": {
@@ -147,6 +158,7 @@ export class Ch2QuizRoom implements Room {
 
         this.selectedBombType = types[index - 1];
         output = [`Set detector to "${this.selectedDetectorCalibration}"`];
+        this.currentQuestion = "select";
         break;
       }
       case "detectorElement": {
@@ -158,13 +170,14 @@ export class Ch2QuizRoom implements Room {
 
         this.selectedDetectorCalibration = elements[index - 1];
         output = [`Set detector to "${this.selectedDetectorCalibration}"`];
+        this.currentQuestion = "select";
         break;
       }
       case "testCodeName": {
         const enteredCodeName = input.trim().toLowerCase();
         this.selectedCodeName = enteredCodeName;
-        this.currentQuestion = "select";
         output = [`Set authentication codename to "${this.selectedCodeName}"`];
+        this.currentQuestion = "select";
         break;
       }
     }
