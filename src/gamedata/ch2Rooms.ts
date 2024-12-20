@@ -1,3 +1,4 @@
+import { Ch2QuizRoom } from "./builders/Ch2QuizRoom";
 import {
   mkActionRoom,
   mkDialougeRoom,
@@ -37,7 +38,7 @@ const rooms: () => [string, Room][] = () => [
     ),
   ],
   ...mkQuestionRooms("questionRoom1", {
-    doneGoto: "ch3-startingRoom",
+    doneGoto: "quizRoom",
     desc: [],
     questions: [
       {
@@ -56,12 +57,57 @@ const rooms: () => [string, Room][] = () => [
           'Glenn Seaborg: "This is our first test of the atomic bomb, the test is code named Trinity. The bomb we are using is an implosion type. An implosion type bomb compresses the core until it reaches critical mass and explodes, which is why it is called an implosion type. The other type of bomb is called a gun type bomb. It is called a gun type bomb because it has two separate parts that when it is time to explode are launched at each other at extremely high speed, and the collision causes the explosion."',
       },
       {
-        goto: "ch3-startingRoom",
+        goto: "quizRoom",
         question: "I have no questions.",
         result: [],
       },
     ],
   }),
+  ["quizRoom", new Ch2QuizRoom("questionRoom1", "preBombTestRoom1")],
+  [
+    "preBombTestRoom1",
+    mkDialougeRoom(
+      [
+        "You return to the room with Glenn Seaborg, Oppenheimer is also present.",
+        "J Robert Oppenhiemer: I take it everything is ready for the test?",
+      ],
+      {
+        desc: "Yes, me and Dr. Seaborg have prepared everything.",
+        goto: "preBombTestRoom2",
+        result: [],
+      },
+    ),
+  ],
+  [
+    "preBombTestRoom2",
+    mkActionRoom(
+      "J Robert Oppenhiemer: Excellent! Once you both put on eye protection, we may monitor the explosion from this bunker.",
+      {
+        desc: "Take a pair eye protection glasses",
+        goto: "bombTestRoom",
+        result: [],
+      },
+    ),
+  ],
+  [
+    "bombTestRoom",
+    mkActionRoom(
+      [
+        "You make your way into the bumker and peer out the small window slit",
+        "Oppenheimer inserts a key into the console and presses a button.",
+        "",
+        "The bomb explodes.",
+        "",
+        "It looks like a sun appeared on the earth, and is vaporizing everything around it.",
+        "The sky appears to be burning as the dust from the explosion flies up and spreads into a strange mushroom shaped cloud.",
+      ],
+      {
+        desc: "ch2 done",
+        goto: "ch3-startingRoom",
+        result: [],
+      },
+    ),
+  ],
 ];
 export const ch1Rooms: RoomCollection = {
   getRooms: rooms,
