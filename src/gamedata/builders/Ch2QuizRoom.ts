@@ -8,8 +8,8 @@ type quizQuestion = "select" | "detectorElement" | "bombType" | "testCodeName";
 export class Ch2QuizRoom implements Room {
   [immerable] = true;
 
-  static detectorCalibrations = ["Uranium", "Plutonium", "Polonium"];
-  static correctDetectorCalibration = Ch2QuizRoom.detectorCalibrations[1];
+  static detectorCalibrations = ["Plutonium", "Uranium", "Polonium"];
+  static correctDetectorCalibration = Ch2QuizRoom.detectorCalibrations[0];
 
   static bombTypes = ["Gun type", "Implosion type"];
   static correctBombType = Ch2QuizRoom.bombTypes[1];
@@ -44,12 +44,16 @@ export class Ch2QuizRoom implements Room {
     const authenticationCorrect =
       this.selectedCodeName == Ch2QuizRoom.correctCodeName;
     const bombCorrect = this.selectedBombType == Ch2QuizRoom.correctBombType;
+    console.log(
+      this.selectedDetectorCalibration,
+      this.selectedCodeName,
+      this.selectedBombType,
+    );
 
     return detectorCorrect && authenticationCorrect && bombCorrect;
   }
 
   getPrompt(): TerminalOutput[] {
-    console.log(`Prompting question ${this.currentQuestion}`);
     switch (this.currentQuestion) {
       case "select": {
         if (this.verifyChoices()) {
@@ -113,7 +117,6 @@ export class Ch2QuizRoom implements Room {
 
   process(input: string): Choice {
     let output: TerminalOutput[];
-    console.log(`Processing "${input}" for question ${this.currentQuestion}`);
 
     switch (this.currentQuestion) {
       case "select": {
