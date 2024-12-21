@@ -1,8 +1,61 @@
-import { OneOrArray, TerminalOutput } from "../terminal/terminalState";
+import {
+  normalizeToArray,
+  OneOrArray,
+  TerminalOutput,
+} from "../terminal/terminalState";
 import { ChoiceRoom } from "./builders/ChoiceRoom";
 import { PressEnterRoom } from "./builders/PressEnterRoom";
 import { ChoiceBuilder, mkActionRoom, mkRoom } from "./builders/roomBuilders";
 import { Room, RoomCollection } from "./framework/Room";
+
+export interface PlaqueBuilder {
+  name: string;
+  result: OneOrArray<TerminalOutput>;
+}
+
+export function mkExhbitRooms(
+  key: string,
+  {
+    doneGoto,
+    desc,
+    plaques,
+  }: {
+    doneGoto: string;
+    desc: OneOrArray<TerminalOutput>;
+    plaques: PlaqueBuilder[];
+  },
+): [string, Room][] {
+  const answerRoomKey = `${key}-answerRoom`;
+  const exhibitRoom = mkRoom(
+    (desc, plaques) =>
+      new ChoiceRoom(desc, plaques, ["Which plaque will you examine?"]),
+    desc,
+    ...plaques.map(({ name, result }) => ({
+      goto: answerRoomKey,
+      desc: name,
+      result: [`${name}:`, ...normalizeToArray(result)],
+    })),
+  );
+
+  const plaqueRoom = mkActionRoom(
+    "",
+    {
+      desc: "Examine another plaque",
+      goto: key,
+      result: [],
+    },
+    {
+      desc: "Leave the exhibit",
+      goto: doneGoto,
+      result: [],
+    },
+  );
+
+  return [
+    [key, exhibitRoom],
+    [answerRoomKey, plaqueRoom],
+  ];
+}
 
 function mkRampRoom(
   id: number,
@@ -66,7 +119,7 @@ const rooms: () => [string, Room][] = () => [
     undefined,
     {
       desc: "Walk into the exhibit",
-      goto: "todo",
+      goto: "madRoom",
       result: [],
     },
   ),
@@ -119,7 +172,7 @@ const rooms: () => [string, Room][] = () => [
       {
         goto: "weaponsRoom",
         desc: "Examine the weapons exhibit",
-        result: [],
+        result: ["You walk up to the weapons exhibit."],
       },
       {
         goto: "todo",
@@ -129,9 +182,72 @@ const rooms: () => [string, Room][] = () => [
     ),
   ],
 
-  [
+  ...mkExhbitRooms("madRoom", {
+    desc: [
+      "The exhibit features many plaqus, each in front of a corresponding model.",
+    ],
+    doneGoto: "ramp2",
+    plaques: [
+      {
+        name: "A pile of missiled stacked over a map of the United States",
+        result: [
+          "By 2010 the United States had amassed approximately 9,400 nuclear warheads, but had never fired a single one of them.",
+        ],
+      },
+      {
+        name: "A model of the earth, with metal wires showing missile trajectories between the US and USSR",
+        result: [
+          "While the US had a massive amount of missiles, during the cold war, the soviet union started to produce more missiles as well. Smaller countries also started producing nuclear weapons on a smaller scale.",
+        ],
+      },
+      {
+        name: "A radar tower, alongside anti air cannons",
+        result: [
+          "Modern technology now allows any country to detect if their opponents have fired a nuclear missile, and respond with their own. False positives in these systems almost led to unprovoked attacks, but fortunately the officers in charge decided not to trust the sensors.",
+        ],
+      },
+      {
+        name: "A model of the earth, with nuclear missiles frozen mid-explosion on every country and state",
+        result: [
+          "The sheer amount of missiles there means that if any country sent just one unprovoked attack, every other country could respond by sending their own missiles. This principle is known as mutually assured destruction, and is what kept the peace between the US and USSR during the cold war.",
+        ],
+      },
+    ],
+  }),
 
-  ]
+  ...mkExhbitRooms("weaponsRoom", {
+    desc: [
+      "Inside the exhibit are many models of planes, submarines, and bombs.",
+    ],
+    doneGoto: "ramp6",
+    plaques: [
+      {
+        name: "Submarine Ballistic Missiles",
+        result:
+          "Submarine ballistic missiles can be launched from submarines and because of acoustic quieting are hard to detect, thus making them a survivable deterrent in the event of a first strike.",
+      },
+      {
+        name: "Cruise Missiles",
+        result:
+          "Cruise missiles are missiles that use aerodynamic lift to sustain flight for most of its flight path, and are designed to deliver warheads over long distances with high precision.",
+      },
+      {
+        name: "Artillery ammo",
+        result:
+          "Nuclear artillery was designed for use on the battlefield instead of strategic bombings against cities, military bases, and heavy industry. Nuclear artillery has almost entirely been replaced by mobile tactical ballistic missile launchers.",
+      },
+      {
+        name: "Depth Charges",
+        result:
+          "Nuclear depth Charges were developed to increase the yield of depth charges, increasing explosion size, thus increasing the likelihood of hitting targeted submarines to a near certainty.",
+      },
+      {
+        name: "Land Mines",
+        result:
+          "Nuclear land mines were designed for military and non-military uses. As military devices they were designed to block or channel enemy forces. As Non-military devices they were designed for demolition, mining, or earthmoving.",
+      },
+    ],
+  }),
 
   [
     "empRoom1",
@@ -156,6 +272,7 @@ const rooms: () => [string, Room][] = () => [
     ),
   ],
 ];
+
 export const ch4Rooms: RoomCollection = {
   getRooms: rooms,
   prefix: "ch4-",
