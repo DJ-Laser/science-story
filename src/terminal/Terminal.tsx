@@ -88,7 +88,7 @@ export default function Terminal() {
       context: new FilesystemContext(),
       history: [],
       clearIndex: -1,
-      input: ["", "run nuclear-adventure.sh"],
+      input: [""],
       inputIndex: 0,
     },
     (state) => {
