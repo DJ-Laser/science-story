@@ -1,9 +1,27 @@
 import { ChoiceRoom } from "./builders/ChoiceRoom";
 import { NameSelectRoom, USER_NAME } from "./builders/NameSelectRoom";
+import { PressEnterRoom } from "./builders/PressEnterRoom";
 import { mkActionRoom, mkRoom } from "./builders/roomBuilders";
 import { Room, RoomCollection } from "./framework/Room";
 
 const rooms: () => [string, Room][] = () => [
+  [
+    "creditsRoom",
+    new PressEnterRoom(
+      [
+        "##### Nuclear Adventure #####",
+        "A game by Alex K and Devin M",
+        "",
+        "### Sources ###",
+        "https://www.afhistory.af.mil/FAQs/Fact-Sheets/Article/458993/the-story-of-the-atomic-bomb/",
+        "https://www.britannica.com/technology/nuclear-weapon",
+        "https://www.afnwc.af.mil/About-Us/History/Trinity-Nuclear-Test/",
+        "https://www2.lbl.gov/Publications/Seaborg/bio.htm",
+      ],
+      "startingRoom",
+    ),
+  ],
+
   [
     "startingRoom",
     mkActionRoom(
@@ -11,7 +29,7 @@ const rooms: () => [string, Room][] = () => [
       {
         goto: "nameSelectRoom",
         desc: "Start the program",
-        result: "Please enter your username",
+        result: "Please enter your name:",
       },
       {
         goto: "todo-credits",
@@ -35,7 +53,7 @@ const rooms: () => [string, Room][] = () => [
       {
         goto: "nameSelectRoom",
         desc: "No",
-        result: [],
+        result: ["Please enter your name:"],
       },
     ),
   ],

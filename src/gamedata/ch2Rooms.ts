@@ -1,4 +1,5 @@
 import { Ch2QuizRoom } from "./builders/Ch2QuizRoom";
+import { USER_NAME } from "./builders/NameSelectRoom";
 import {
   mkActionRoom,
   mkDialougeRoom,
@@ -11,8 +12,7 @@ const rooms: () => [string, Room][] = () => [
     "startingRoom",
     mkActionRoom(
       [
-        "You are in a bunker. The bunker has a way to see outside.",
-        "The outside is a desert that has nothing you can see outside of sand and rock.",
+        "You are in a bunker. The bunker has a small window through which you can just make out the outside, a desert with nothing you can see outside of sand and rock.",
         "The bunker has large amounts of scientific equipment that you can not tell what the use is for.",
         "Oppenheimer is walking over to a scientist who seems to be in charge.",
       ],
@@ -27,8 +27,9 @@ const rooms: () => [string, Room][] = () => [
     "meetingRoom",
     mkDialougeRoom(
       [
-        'J Robert Oppenhiemer: "Hello Glenn. We have a new researcher with us today so you should explain what is happening here."',
-        'Scientist: "Of Course. I am Dr Glenn Seaborg. I am the scientist in charge here. Right now we are preparing for the test of the current version of the bomb. This version of the bomb has Plutonium used instead of uranium to spark the initial reaction."',
+        `J Robert Oppenhiemer: "Hello Glenn. This is ${USER_NAME}, our new researcher, so you should explain what is happening here."`,
+        'Scientist: "Of Course. I am Dr Glenn Seaborg. I am the scientist in charge here. Right now we are preparing for the test of the current version of the bomb."',
+        'Glenn Seaborg: "This version of the bomb uses Plutonium instead of uranium to spark the initial reaction, making it more powerful"',
       ],
       {
         goto: "questionRoom1",
@@ -93,7 +94,7 @@ const rooms: () => [string, Room][] = () => [
     "bombTestRoom",
     mkActionRoom(
       [
-        "You make your way into the bumker and peer out the small window slit",
+        "You make your way to the front of the bunker and peer out the small window slit",
         "Oppenheimer inserts a key into the console and presses a button.",
         "",
         "The bomb explodes.",

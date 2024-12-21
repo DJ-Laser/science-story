@@ -1,3 +1,4 @@
+import { USER_NAME } from "./builders/NameSelectRoom";
 import {
   mkActionRoom,
   mkDialougeRoom,
@@ -23,7 +24,8 @@ const rooms: () => [string, Room][] = () => [
   [
     "meetingRoom",
     mkDialougeRoom(
-      'Scientist: "Ah hello. You must be the new researcher who will be joining us today."',
+      () =>
+        `Scientist: "Ah hello. You must be the new researcher who will be joining us today. ${USER_NAME}, was it?"`,
       {
         goto: "questionRoom1",
         desc: "What is this place?",
