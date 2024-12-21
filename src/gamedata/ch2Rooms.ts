@@ -58,11 +58,6 @@ const rooms: () => [string, Room][] = () => [
         result:
           'Glenn Seaborg: "This is our first test of the atomic bomb, the test is code named Trinity. The bomb we are using is an implosion type. An implosion type bomb compresses the core until it reaches critical mass and explodes, which is why it is called an implosion type. The other type of bomb is called a gun type bomb. It is called a gun type bomb because it has two separate parts that when it is time to explode are launched at each other at extremely high speed, and the collision causes the explosion."',
       },
-      {
-        goto: "quizRoom",
-        question: "I have no questions.",
-        result: [],
-      },
     ],
   }),
   ["quizRoom", new Ch2QuizRoom("questionRoom1", "preBombTestRoom1")],

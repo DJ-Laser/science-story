@@ -75,11 +75,6 @@ const rooms: () => [string, Room][] = () => [
         result:
           'J Robert Oppenheimer: "I direct the project here at the Los Alamos laboratory, where we are designing the bombs. The other laboratories are at hanford, washington and Oak ridge, Tennessee."',
       },
-      {
-        goto: "transitionRoom",
-        question: "I have no questions",
-        result: [],
-      },
     ],
   }),
 
