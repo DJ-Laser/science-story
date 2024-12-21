@@ -4,23 +4,19 @@ import { PressEnterRoom } from "./builders/PressEnterRoom";
 import { mkActionRoom, mkRoom } from "./builders/roomBuilders";
 import { Room, RoomCollection } from "./framework/Room";
 
+export const credits = [
+  "##### Nuclear Adventure #####",
+  "A game by Alex K and Devin M",
+  "",
+  "### Sources ###",
+  "https://www.afhistory.af.mil/FAQs/Fact-Sheets/Article/458993/the-story-of-the-atomic-bomb/",
+  "https://www.britannica.com/technology/nuclear-weapon",
+  "https://www.afnwc.af.mil/About-Us/History/Trinity-Nuclear-Test/",
+  "https://www2.lbl.gov/Publications/Seaborg/bio.htm",
+];
+
 const rooms: () => [string, Room][] = () => [
-  [
-    "creditsRoom",
-    new PressEnterRoom(
-      [
-        "##### Nuclear Adventure #####",
-        "A game by Alex K and Devin M",
-        "",
-        "### Sources ###",
-        "https://www.afhistory.af.mil/FAQs/Fact-Sheets/Article/458993/the-story-of-the-atomic-bomb/",
-        "https://www.britannica.com/technology/nuclear-weapon",
-        "https://www.afnwc.af.mil/About-Us/History/Trinity-Nuclear-Test/",
-        "https://www2.lbl.gov/Publications/Seaborg/bio.htm",
-      ],
-      "startingRoom",
-    ),
-  ],
+  ["creditsRoom", new PressEnterRoom(credits, "startingRoom")],
 
   [
     "startingRoom",
