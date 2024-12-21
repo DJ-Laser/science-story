@@ -7,6 +7,7 @@ import { introRooms } from "../../gamedata/introRooms";
 import { ch1Rooms } from "../../gamedata/ch1Rooms";
 import { ch2Rooms } from "../../gamedata/ch2Rooms";
 import { ch3Rooms } from "../../gamedata/ch3Rooms";
+import { ch4Rooms } from "../../gamedata/ch4Rooms";
 
 type PrefixedRoom = { room: Room; prefix: string };
 
@@ -28,8 +29,9 @@ export class GameContext implements TerminalContext {
     this.addRooms(ch1Rooms);
     this.addRooms(ch2Rooms);
     this.addRooms(ch3Rooms);
+    this.addRooms(ch4Rooms);
 
-    const prefix = introRooms.prefix;
+    const prefix = ch4Rooms.prefix; //introRooms.prefix;
     const returnedRoom = this.rooms.get(prefix + "startingRoom");
     if (returnedRoom === undefined) throw "Starting room not found";
 
