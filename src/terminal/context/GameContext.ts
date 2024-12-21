@@ -31,7 +31,7 @@ export class GameContext implements TerminalContext {
     this.addRooms(ch3Rooms);
     this.addRooms(ch4Rooms);
 
-    const prefix = ch4Rooms.prefix; //introRooms.prefix;
+    const prefix = introRooms.prefix;
     const returnedRoom = this.rooms.get(prefix + "startingRoom");
     if (returnedRoom === undefined) throw "Starting room not found";
 
