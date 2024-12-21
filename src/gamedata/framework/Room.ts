@@ -7,6 +7,6 @@ export interface Room {
 }
 
 export interface RoomCollection {
-  getRooms: () => ([string, Room])[];
+  getRooms: () => [string, Room][];
   prefix: string;
 }

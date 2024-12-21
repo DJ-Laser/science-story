@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useImmerReducer } from "use-immer";
 import { ChevronRight, Terminal as TerminalIcon } from "lucide-react";
 import { HistoryEntry, TerminalState, toOutputEntries } from "./terminalState";
@@ -42,9 +42,11 @@ function reducer(draft: TerminalState, action: Action) {
   }
 }
 
-function TerminalCommand(
-  { children }: { children: JSX.Element | readonly JSX.Element[] },
-) {
+function TerminalCommand({
+  children,
+}: {
+  children: JSX.Element | readonly JSX.Element[];
+}) {
   return (
     <div className="my-2 h-4 flex items-center gap-2 text-green-400">
       <ChevronRight className="w-4 h-4" />
@@ -65,7 +67,7 @@ function TerminalHistory({ entry }: { entry: HistoryEntry }) {
       );
     case "output":
       return (
-        <div className="ml-6 text-gray-300 whitespace-pre-line">
+        <div className="min-h-4 ml-6 text-gray-300 whitespace-pre-line">
           <span>{entry.output}</span>
         </div>
       );
@@ -86,7 +88,7 @@ export default function Terminal() {
       context: new FilesystemContext(),
       history: [],
       clearIndex: -1,
-      input: [""],
+      input: ["", "run nuclear-adventure.sh"],
       inputIndex: 0,
     },
     (state) => {
@@ -153,7 +155,8 @@ export default function Terminal() {
   }, [state.history]);
 
   // Preserve original keys for react element keying
-  const displayedHistory = state.history.map((entry, i) => ({ entry, i }))
+  const displayedHistory = state.history
+    .map((entry, i) => ({ entry, i }))
     .filter((_, i) => i > state.clearIndex);
   const input = state.input[state.inputIndex];
 
@@ -191,7 +194,8 @@ export default function Terminal() {
                   dispatch({
                     type: "setInput",
                     input: e.target.value,
-                  })}
+                  })
+                }
                 className="w-full bg-transparent outline-none"
                 autoFocus
                 spellCheck={false}

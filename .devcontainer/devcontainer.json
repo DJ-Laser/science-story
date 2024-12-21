@@ -16,9 +16,7 @@
   // Configure tool-specific properties.
   "customizations": {
     "vscode": {
-      "extensions": [
-        "justjavac.vscode-deno-extensionpack"
-      ]
+      "extensions": ["justjavac.vscode-deno-extensionpack"]
     }
   }
   // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.

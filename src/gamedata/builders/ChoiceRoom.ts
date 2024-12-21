@@ -20,13 +20,12 @@ export class ChoiceRoom implements Room {
   }
 
   getPrompt(): TerminalOutput[] {
-    const description = this.description.length === 0
-      ? []
-      : [...this.description, "\n"];
+    const description =
+      this.description.length === 0 ? [] : [...this.description, "\n"];
     const prompt = this.prompt.length === 0 ? [] : [...this.prompt, "\n"];
 
-    const choices = this.choices.map((choice, i) =>
-      `${i + 1}) ${choice.description}`
+    const choices = this.choices.map(
+      (choice, i) => `${i + 1}) ${choice.description}`,
     );
 
     return [...description, ...prompt, ...choices];
@@ -42,9 +41,12 @@ export class ChoiceRoom implements Room {
       return prev;
     }, null);
 
-    return choice ?? new ErrorChoice([
-      "Invalid choice, please input a number corresponding to the desired choice.",
-    ]);
+    return (
+      choice ??
+      new ErrorChoice([
+        "Invalid choice, please input a number corresponding to the desired choice.",
+      ])
+    );
   }
 }
 
