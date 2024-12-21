@@ -32,7 +32,7 @@ const rooms: () => [string, Room][] = () => [
         result: "Please enter your name:",
       },
       {
-        goto: "todo-credits",
+        goto: "creditsRoom",
         desc: "View the credits",
         result: [],
       },
@@ -43,7 +43,7 @@ const rooms: () => [string, Room][] = () => [
     "confirmNameRoom",
     mkRoom(
       (d, c) =>
-        new ChoiceRoom(d, c, [() => `Is the name \`${USER_NAME}\` correct?`]),
+        new ChoiceRoom(d, c, [() => `Is the name "${USER_NAME}" correct?`]),
       "",
       {
         goto: "startSimulationRoom",
@@ -59,17 +59,38 @@ const rooms: () => [string, Room][] = () => [
   ],
   [
     "startSimulationRoom",
-    mkActionRoom(
+    new PressEnterRoom(
       [
         () =>
           `Hello ${USER_NAME}, and welcome to the interactive history lesson.`,
-        "Today you are going to go on an adventure through time and be able to speak to people and learn about how the atomic bomb was designed and have evolved overtime.",
+        "Today you are going to go on an adventure through time and space to be able to speak to people who witnessed the atomic bomb firsthand.",
+        'You will start by meeting a very famous scientist, the man known as the "father of the atomic bomb"',
       ],
-      {
-        goto: "ch1-startingRoom",
-        desc: "Start the simulation",
-        result: [],
-      },
+      "beginCh1Room",
+    ),
+  ],
+  [
+    "beginCh1Room",
+    new PressEnterRoom(
+      [
+        "You see the world around you disolving and becomng void.",
+        "You also somehow sense yourself travlling back in time.",
+        "The feeling is fuzzy, but you think it must be the early 1940s",
+        "Then, the world begins reshaping itself and suddenly...",
+      ],
+      "ch1-startingRoom",
+    ),
+  ],
+  [
+    "finaleRoom",
+    new PressEnterRoom(
+      [
+        "Congratulations! You have completed Nuclear Adventure.",
+        "We hope you enjoyed, and maybe even learned something along the way.",
+        "",
+        "Thanks for playing :)",
+      ],
+      "creditsRoom",
     ),
   ],
 ];

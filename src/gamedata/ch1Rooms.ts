@@ -1,4 +1,5 @@
 import { USER_NAME } from "./builders/NameSelectRoom";
+import { PressEnterRoom } from "./builders/PressEnterRoom";
 import {
   mkActionRoom,
   mkDialougeRoom,
@@ -44,7 +45,7 @@ const rooms: () => [string, Room][] = () => [
     ),
   ],
   ...mkQuestionRooms("questionRoom1", {
-    doneGoto: "ch2-startingRoom",
+    doneGoto: "transitionRoom",
     desc: [
       'J Robert Oppenheimer: "Our work is on a top secret operation known as the Manhattan project."',
       '"We are working on developing the kind of nuclear weapons that could lead to a decisive end to the war."',
@@ -75,12 +76,27 @@ const rooms: () => [string, Room][] = () => [
           'J Robert Oppenheimer: "I direct the project here at the Los Alamos laboratory, where we are designing the bombs. The other laboratories are at hanford, washington and Oak ridge, Tennessee."',
       },
       {
-        goto: "ch2-startingRoom",
+        goto: "transitionRoom",
         question: "I have no questions",
         result: [],
       },
     ],
   }),
+
+  [
+    "transitionRoom",
+    new PressEnterRoom(
+      [
+        `J Robert Oppenheimer: "Good, good. I trust you'll fit in well here."`,
+        "Oppenheimer walks away, and you realize you never learned what you're suposed to be doing here.",
+        "You are about to call out to him when the world begins disolving again.",
+        "",
+        "This time, as the world reshapes, you know exactly where and when you are.",
+        "July 16, 1945, in Los Alamos, New Mexico...",
+      ],
+      "ch2-startingRoom",
+    ),
+  ],
 ];
 
 export const ch1Rooms: RoomCollection = {

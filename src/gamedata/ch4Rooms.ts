@@ -89,7 +89,15 @@ function mkRampRoom(
 }
 
 const rooms: () => [string, Room][] = () => [
-  ["startingRoom", new PressEnterRoom(["TODO: transition"], "ramp0")],
+  [
+    "startingRoom",
+    new PressEnterRoom(
+      [
+        "Despite it being modern times, this is not where you started. It seems there is still more to explore.",
+      ],
+      "ramp0",
+    ),
+  ],
   mkRampRoom(
     0,
     [
@@ -175,7 +183,7 @@ const rooms: () => [string, Room][] = () => [
         result: ["You walk up to the weapons exhibit."],
       },
       {
-        goto: "todo",
+        goto: "transitionRoom",
         desc: "Leave the museum",
         result: [],
       },
@@ -269,6 +277,15 @@ const rooms: () => [string, Room][] = () => [
         "Once the voiceover stops, you decide to walk back from the exhibit.",
       ],
       "ramp6",
+    ),
+  ],
+  [
+    "transitionRoom",
+    new PressEnterRoom(
+      [
+        "As you walk out the door, the world disolves for what you can feel is the final time...",
+      ],
+      "intro-finaleRoom",
     ),
   ],
 ];

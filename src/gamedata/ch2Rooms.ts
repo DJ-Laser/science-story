@@ -1,5 +1,6 @@
 import { Ch2QuizRoom } from "./builders/Ch2QuizRoom";
 import { USER_NAME } from "./builders/NameSelectRoom";
+import { PressEnterRoom } from "./builders/PressEnterRoom";
 import {
   mkActionRoom,
   mkDialougeRoom,
@@ -18,7 +19,7 @@ const rooms: () => [string, Room][] = () => [
       ],
       {
         goto: "meetingRoom",
-        desc: "Meet the scientist",
+        desc: "Walk over to them",
         result: [],
       },
     ),
@@ -33,7 +34,7 @@ const rooms: () => [string, Room][] = () => [
       ],
       {
         goto: "questionRoom1",
-        desc: "May I ask you some questions",
+        desc: "May I ask you some questions?",
         result: ['Glenn Seaborg: "Of course, what would you like to know"'],
       },
     ),
@@ -92,7 +93,7 @@ const rooms: () => [string, Room][] = () => [
   ],
   [
     "bombTestRoom",
-    mkActionRoom(
+    new PressEnterRoom(
       [
         "You make your way to the front of the bunker and peer out the small window slit",
         "Oppenheimer inserts a key into the console and presses a button.",
@@ -102,11 +103,18 @@ const rooms: () => [string, Room][] = () => [
         "It looks like a sun appeared on the earth, and is vaporizing everything around it.",
         "The sky appears to be burning as the dust from the explosion flies up and spreads into a strange mushroom shaped cloud.",
       ],
-      {
-        desc: "ch2 done",
-        goto: "ch3-startingRoom",
-        result: [],
-      },
+      "transitionRoom",
+    ),
+  ],
+  [
+    "transitionRoom",
+    new PressEnterRoom(
+      [
+        "You feel your work here is done as the world disolves once more.",
+        "The feeling of time is fuzzier now, but feel only a few months have passed.",
+        "The world regains it's shape once again...",
+      ],
+      "ch3-startingRoom",
     ),
   ],
 ];
