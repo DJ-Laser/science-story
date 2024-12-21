@@ -62,13 +62,15 @@ export class Ch2QuizRoom implements Room {
 
         return this.promptChoices(
           [
-            "There are three steps that need to be completed before you can proceed with the test",
+            'Glenn Seaborg: "There are three steps that need to be completed before we can proceed with the test"',
             "",
+            "Which step will you complete?",
           ],
           [
             "Calibrate the radiation detector",
             "Calibrate the detonator",
             "Enter the authentication code",
+            "Return to Glenn Seaborg to ask more questions",
           ],
         );
       }

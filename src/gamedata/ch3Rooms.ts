@@ -15,7 +15,7 @@ const rooms: () => [string, Room][] = () => [
         "You find yourself at the Air Force base on Tinian Island.",
         "A pilot is getting out of a plane and is approaching the you.",
       ],
-      "pilotRoom",
+      "pilotMeetingRoom",
     ),
   ],
   [
@@ -45,7 +45,7 @@ const rooms: () => [string, Room][] = () => [
   ],
   ...mkQuestionRooms("pilotQuestionRoom", {
     desc: 'Sweeny: "What do you want to know about the bomb?"',
-    doneGoto: "test-nullRoom",
+    doneGoto: "pilotLeaveRoom",
     questions: [
       {
         question:

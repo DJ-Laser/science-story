@@ -25,9 +25,8 @@ export class PressEnterRoom implements Room {
   getPrompt(): TerminalOutput[] {
     const description =
       this.description.length === 0 ? [] : [...this.description, "\n"];
-    const prompt = this.prompt.length === 0 ? [] : [...this.prompt, "\n"];
 
-    return [...description, ...prompt];
+    return [...description, ...this.prompt];
   }
 
   process(): Choice {
