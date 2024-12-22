@@ -28,7 +28,7 @@ const rooms: () => [string, Room][] = () => [
     "meetingRoom",
     mkDialougeRoom(
       [
-        `J Robert Oppenhiemer: "Hello Glenn. This is ${USER_NAME}, our new researcher, so you should explain what is happening here."`,
+        () => `J Robert Oppenhiemer: "Hello Glenn. This is ${USER_NAME}, our new researcher, so you should explain what is happening here."`,
         'Scientist: "Of Course. I am Dr Glenn Seaborg. I am the scientist in charge here. Right now we are preparing for the test of the current version of the bomb."',
         'Glenn Seaborg: "This version of the bomb uses Plutonium instead of uranium to spark the initial reaction, making it more powerful"',
       ],
